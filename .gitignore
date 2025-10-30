@@ -5,7 +5,7 @@
 
 # Data 
 raw_docs/
-faiss_store/
+chroma_store/
 
 # SQLite Database
 rag_raw_docs.sqlite
