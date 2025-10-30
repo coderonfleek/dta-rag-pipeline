@@ -9,7 +9,7 @@ except Exception:  # fallback for older langchain
 	from langchain.schema import Document  # type: ignore
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 
@@ -34,22 +34,24 @@ def get_embeddings(model_name: str = "sentence-transformers/all-MiniLM-L6-v2") -
 
 def build_vectorstore(
 	chunked_documents: List[Document], embeddings: HuggingFaceEmbeddings
-) -> FAISS:
-	"""Build a FAISS vectorstore from chunked documents."""
-	return FAISS.from_documents(chunked_documents, embeddings)
+) -> Chroma:
+	"""Build a Chroma vectorstore from chunked documents (in-memory)."""
+	return Chroma.from_documents(chunked_documents, embedding=embeddings)
 
 
-def save_vectorstore(vectorstore: FAISS, path: str) -> None:
-	"""Persist FAISS vectorstore to local folder."""
+def save_vectorstore(vectorstore: Chroma, path: str) -> None:
+	"""Persist Chroma vectorstore to a local directory."""
+	# Chroma uses a persist directory; set it if not set and persist
+	vectorstore._persist_directory = path  # set target path before persisting
 	Path(path).mkdir(parents=True, exist_ok=True)
-	vectorstore.save_local(path)
+	vectorstore.persist()
 
 
-def load_vectorstore(path: str, embeddings: HuggingFaceEmbeddings) -> FAISS:
-	"""Load a FAISS vectorstore from local folder."""
-	return FAISS.load_local(path, embeddings, allow_dangerous_deserialization=True)
+def load_vectorstore(path: str, embeddings: HuggingFaceEmbeddings) -> Chroma:
+	"""Load a Chroma vectorstore from a local directory."""
+	return Chroma(persist_directory=path, embedding_function=embeddings)
 
 
-def get_retriever(vectorstore: FAISS, k: int = 4):
+def get_retriever(vectorstore: Chroma, k: int = 4):
 	"""Create a retriever from the vectorstore."""
 	return vectorstore.as_retriever(search_kwargs={"k": k})

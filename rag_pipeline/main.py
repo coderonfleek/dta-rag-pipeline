@@ -38,7 +38,7 @@ def run_build(
 
 	vs = build_vectorstore(chunks, embeddings_model)
 	save_vectorstore(vs, vectorstore_path)
-	print(f"Saved FAISS vectorstore to {vectorstore_path}")
+	print(f"Saved Chroma vectorstore to {vectorstore_path}")
 
 
 def run_query(vectorstore_path: str, query: str, model_name: str, k: int = 4) -> None:
@@ -58,7 +58,7 @@ def main() -> None:
 	parser = argparse.ArgumentParser(description="RAG Pipeline Demo")
 	parser.add_argument("--source_dir", type=str, default="./data", help="Folder of input files")
 	parser.add_argument("--db_path", type=str, default="./rag_raw_docs.sqlite", help="SQLite DB path")
-	parser.add_argument("--vectorstore_path", type=str, default="./faiss_store", help="Path to save/load FAISS")
+	parser.add_argument("--vectorstore_path", type=str, default="./chroma_store", help="Path to save/load Chroma")
 	parser.add_argument("--chunk_size", type=int, default=1000)
 	parser.add_argument("--chunk_overlap", type=int, default=200)
 	parser.add_argument("--model_name", type=str, default="sentence-transformers/all-MiniLM-L6-v2")
