@@ -11,6 +11,8 @@ except Exception:  # fallback for older langchain
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import chromadb
 
 DEFAULT_COLLECTION_NAME = "rag-docs"
@@ -30,14 +32,34 @@ def chunk_documents(
 	return splitter.split_documents(documents)
 
 
-def get_embeddings(model_name: str = "sentence-transformers/all-MiniLM-L6-v2") -> HuggingFaceEmbeddings:
-	"""Create a HuggingFace embeddings instance."""
-	return HuggingFaceEmbeddings(model_name=model_name)
+def get_embeddings(
+    model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
+    provider: str = "huggingface",
+):
+    """Create an embeddings instance for the selected provider.
+
+    provider: one of {"huggingface", "openai", "google"}
+    """
+    p = (provider or "huggingface").lower()
+    if p == "openai":
+        # If a HF-style model name was left as default, switch to OpenAI default
+        chosen = model_name
+        if not chosen or chosen.startswith("sentence-transformers/"):
+            chosen = "text-embedding-3-small"
+        return OpenAIEmbeddings(model=chosen)
+    if p == "google":
+        # If a HF-style model name was left as default, switch to Google default
+        chosen = model_name
+        if not chosen or chosen.startswith("sentence-transformers/"):
+            chosen = "models/text-embedding-004"
+        return GoogleGenerativeAIEmbeddings(model=chosen)
+    # Default to HuggingFace
+    return HuggingFaceEmbeddings(model_name=model_name)
 
 
 def build_vectorstore(
     chunked_documents: List[Document],
-    embeddings: HuggingFaceEmbeddings,
+    embeddings,
     persist_directory: Optional[str] = None,
 ) -> Chroma:
     """Build a Chroma vectorstore from chunked documents.
@@ -64,7 +86,7 @@ def save_vectorstore(vectorstore: Chroma, path: str) -> None:
     # No explicit persist() in langchain-chroma. Data is written via the client.
 
 
-def load_vectorstore(path: str, embeddings: HuggingFaceEmbeddings) -> Chroma:
+def load_vectorstore(path: str, embeddings) -> Chroma:
     """Load a Chroma vectorstore from a local directory using PersistentClient."""
     client = chromadb.PersistentClient(path=path)
     return Chroma(

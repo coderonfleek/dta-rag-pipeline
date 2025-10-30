@@ -8,3 +8,5 @@ pydantic>=2.9.2  # Data validation/settings management used by LangChain compone
 pypdf>=5.0.1  # PDF parsing to extract text from PDF source documents
 python-dotenv>=1.0.1  # Load environment variables from a .env file for config
 langchain-huggingface>=0.0.3  # HuggingFace integrations for LangChain (embeddings, pipelines)
+langchain-openai>=0.2.0  # OpenAI integrations (text embeddings)
+langchain-google-genai>=2.0.0  # Google GenAI embeddings integration
