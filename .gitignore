@@ -1,0 +1,46 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Data 
+raw_docs/
+faiss_store/
+
+# SQLite Database
+rag_raw_docs.sqlite
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+Thumbs.db
+.DS_Store
