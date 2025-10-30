@@ -1,8 +1,10 @@
 langchain>=0.2.16  # High-level framework to build LLM apps and RAG pipelines
 langchain-community>=0.2.12  # Community integrations (vector stores, embeddings, loaders)
 chromadb>=0.5.5  # Chroma vector database for local persistence
+langchain-chroma>=0.1.0  # LangChain Chroma integration package
 sentence-transformers>=3.0.1  # HuggingFace models to generate text embeddings
 sqlalchemy>=2.0.32  # ORM/DB toolkit to manage the SQLite raw document store
 pydantic>=2.9.2  # Data validation/settings management used by LangChain components
 pypdf>=5.0.1  # PDF parsing to extract text from PDF source documents
 python-dotenv>=1.0.1  # Load environment variables from a .env file for config
+langchain-huggingface>=0.0.3  # HuggingFace integrations for LangChain (embeddings, pipelines)

@@ -9,8 +9,11 @@ except Exception:  # fallback for older langchain
 	from langchain.schema import Document  # type: ignore
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+import chromadb
+
+DEFAULT_COLLECTION_NAME = "rag-docs"
 
 
 def chunk_documents(
@@ -33,23 +36,42 @@ def get_embeddings(model_name: str = "sentence-transformers/all-MiniLM-L6-v2") -
 
 
 def build_vectorstore(
-	chunked_documents: List[Document], embeddings: HuggingFaceEmbeddings
+    chunked_documents: List[Document],
+    embeddings: HuggingFaceEmbeddings,
+    persist_directory: Optional[str] = None,
 ) -> Chroma:
-	"""Build a Chroma vectorstore from chunked documents (in-memory)."""
-	return Chroma.from_documents(chunked_documents, embedding=embeddings)
+    """Build a Chroma vectorstore from chunked documents.
+
+    With langchain-chroma, persistence is handled via a Chroma `PersistentClient`.
+    We create a client at `persist_directory` and bind a stable `collection_name`.
+    """
+    client = None
+    if persist_directory:
+        Path(persist_directory).mkdir(parents=True, exist_ok=True)
+        client = chromadb.PersistentClient(path=persist_directory)
+
+    return Chroma.from_documents(
+        chunked_documents,
+        embedding=embeddings,
+        client=client,
+        collection_name=DEFAULT_COLLECTION_NAME,
+    )
 
 
 def save_vectorstore(vectorstore: Chroma, path: str) -> None:
-	"""Persist Chroma vectorstore to a local directory."""
-	# Chroma uses a persist directory; set it if not set and persist
-	vectorstore._persist_directory = path  # set target path before persisting
-	Path(path).mkdir(parents=True, exist_ok=True)
-	vectorstore.persist()
+    """No-op for langchain-chroma: persistence is handled by the client."""
+    Path(path).mkdir(parents=True, exist_ok=True)
+    # No explicit persist() in langchain-chroma. Data is written via the client.
 
 
 def load_vectorstore(path: str, embeddings: HuggingFaceEmbeddings) -> Chroma:
-	"""Load a Chroma vectorstore from a local directory."""
-	return Chroma(persist_directory=path, embedding_function=embeddings)
+    """Load a Chroma vectorstore from a local directory using PersistentClient."""
+    client = chromadb.PersistentClient(path=path)
+    return Chroma(
+        client=client,
+        collection_name=DEFAULT_COLLECTION_NAME,
+        embedding_function=embeddings,
+    )
 
 
 def get_retriever(vectorstore: Chroma, k: int = 4):

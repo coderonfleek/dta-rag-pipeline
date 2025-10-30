@@ -36,7 +36,7 @@ def run_build(
 	# Step 3: Embed and save your documents in a vector database
 	embeddings_model = get_embeddings(model_name=model_name)
 
-	vs = build_vectorstore(chunks, embeddings_model)
+	vs = build_vectorstore(chunks, embeddings_model, persist_directory=vectorstore_path)
 	save_vectorstore(vs, vectorstore_path)
 	print(f"Saved Chroma vectorstore to {vectorstore_path}")
 
