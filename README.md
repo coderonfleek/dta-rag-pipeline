@@ -4,7 +4,7 @@ This project demonstrates a simple RAG pipeline with self-contained functions:
 
 - Pull source documents into a SQLite database
 - Chunk documents
-- Embed documents with HuggingFace
+- Embed documents with HuggingFace (Only)
 - Save and load vectors using Chroma (local vector database)
 
 ### Requirements
