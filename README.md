@@ -15,7 +15,9 @@ This project demonstrates a simple RAG pipeline with self-contained functions:
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-Set API keys in a `.env` file at the project root (same folder as this README):
+```
+
+#### Set API keys in a `.env` file at the project root (same folder as this README):
 
 ```env
 # For OpenAI embeddings
@@ -27,7 +29,6 @@ GOOGLE_API_KEY=your-google-genai-api-key
 
 The CLI automatically loads this `.env` before running.
 
-```
 
 ### Project Layout
 
