@@ -63,7 +63,7 @@ def main() -> None:
 	load_dotenv(dotenv_path=str(project_root_env))
 
 	parser = argparse.ArgumentParser(description="RAG Pipeline Demo")
-	parser.add_argument("--source_dir", type=str, default="./data", help="Folder of input files")
+	parser.add_argument("--source_dir", type=str, default="./data", help="Folder of input files or s3://bucket/prefix for public S3")
 	parser.add_argument("--db_path", type=str, default="./rag_raw_docs.sqlite", help="SQLite DB path")
 	parser.add_argument("--vectorstore_path", type=str, default="./chroma_store", help="Path to save/load Chroma")
 	parser.add_argument("--chunk_size", type=int, default=1000)

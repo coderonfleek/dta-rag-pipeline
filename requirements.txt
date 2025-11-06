@@ -10,3 +10,4 @@ python-dotenv>=1.0.1  # Load environment variables from a .env file for config
 langchain-huggingface>=0.0.3  # HuggingFace integrations for LangChain (embeddings, pipelines)
 langchain-openai>=0.2.0  # OpenAI integrations (text embeddings)
 langchain-google-genai>=2.0.0  # Google GenAI embeddings integration
+boto3>=1.34.0  # S3 access for public bucket ingestion

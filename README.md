@@ -39,12 +39,26 @@ The CLI automatically loads this `.env` before running.
 ### Usage
 
 1) Prepare a folder with your documents (e.g., `.txt`, `.md`, `.pdf`).
+   - You can also point `--source_dir` to a public S3 bucket using an `s3://bucket/prefix` URL. Anonymous access is used (no credentials), so the bucket/objects must be publicly readable.
 
 2) Run the pipeline example (build and persist Chroma to `--vectorstore_path`):
 
 ```bash
 python -m rag_pipeline.main \
   --source_dir ./raw_docs \
+  --db_path ./rag_raw_docs.sqlite \
+  --vectorstore_path ./chroma_store \
+  --chunk_size 1000 \
+  --chunk_overlap 200 \
+  --embeddings_provider huggingface \
+  --model_name sentence-transformers/all-MiniLM-L6-v2
+```
+
+Public S3 example:
+
+```bash
+python -m rag_pipeline.main \
+  --source_dir s3://your-public-bucket/path \
   --db_path ./rag_raw_docs.sqlite \
   --vectorstore_path ./chroma_store \
   --chunk_size 1000 \
