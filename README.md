@@ -38,7 +38,7 @@ The CLI automatically loads this `.env` before running.
 
 ### Usage
 
-1) Prepare a folder with your documents (e.g., `.txt`, `.md`, `.pdf`).
+1) Prepare a folder with your documents (e.g., `.txt`, `.md`, `.pdf`) in a local path.
 
 2) Run the pipeline example (build and persist Chroma to `--vectorstore_path`):
 
