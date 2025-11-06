@@ -36,7 +36,7 @@ The CLI automatically loads this `.env` before running.
 - `rag_pipeline/pipeline.py`: Chunking, embedding, and Chroma vector store utilities
 - `rag_pipeline/main.py`: Example script wiring all steps together
 
-### Usage
+### Usage (Non Automated)
 
 1) Prepare a folder with your documents (e.g., `.txt`, `.md`, `.pdf`).
    - You can also point `--source_dir` to a public S3 bucket using an `s3://bucket/prefix` URL. Anonymous access is used (no credentials), so the bucket/objects must be publicly readable.
