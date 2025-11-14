@@ -1,0 +1,8 @@
+parameters:
+  source_dir: "./raw_docs"
+  db_path: "./rag_raw_docs.sqlite"
+  vectorstore_path: "./chroma_store"
+  chunk_size: 1000
+  chunk_overlap: 200
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  embeddings_provider: "huggingface"

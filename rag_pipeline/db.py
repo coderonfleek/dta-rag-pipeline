@@ -72,7 +72,6 @@ def insert_many_raw_documents(
 			session.add(row)
 		session.commit()
 
-
 def fetch_all_documents(db_path: str) -> List[Document]:
 	"""Fetch all raw documents from the SQLite DB as LangChain `Document`s."""
 	engine = _make_engine(db_path)

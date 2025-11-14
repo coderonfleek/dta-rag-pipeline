@@ -11,3 +11,4 @@ langchain-huggingface>=0.0.3  # HuggingFace integrations for LangChain (embeddin
 langchain-openai>=0.2.0  # OpenAI integrations (text embeddings)
 langchain-google-genai>=2.0.0  # Google GenAI embeddings integration
 boto3>=1.34.0  # S3 access for public bucket ingestion
+zenml[server]>=0.91.0  # ZenML server components

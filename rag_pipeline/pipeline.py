@@ -1,12 +1,15 @@
-from __future__ import annotations
+#from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterable, List, Optional
+from typing import Iterable, List, Optional, TYPE_CHECKING
 
-try:
+if TYPE_CHECKING:
 	from langchain_core.documents import Document
-except Exception:  # fallback for older langchain
-	from langchain.schema import Document  # type: ignore
+else:
+	try:
+		from langchain_core.documents import Document
+	except Exception:  # fallback for older langchain
+		from langchain.schema import Document  # type: ignore
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
@@ -14,10 +17,12 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import OpenAIEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import chromadb
+from zenml import step
 
 DEFAULT_COLLECTION_NAME = "rag-docs"
 
 
+@step(enable_cache=False)
 def chunk_documents(
 	documents: List[Document],
 	chunk_size: int = 1000,
@@ -57,6 +62,7 @@ def get_embeddings(
     return HuggingFaceEmbeddings(model_name=model_name)
 
 
+@step(enable_cache=False)
 def build_vectorstore(
     chunked_documents: List[Document],
     embeddings,
@@ -78,6 +84,7 @@ def build_vectorstore(
         client=client,
         collection_name=DEFAULT_COLLECTION_NAME,
     )
+
 
 
 def save_vectorstore(vectorstore: Chroma, path: str) -> None:

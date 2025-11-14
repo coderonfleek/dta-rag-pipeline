@@ -16,7 +16,9 @@ from .pipeline import (
 	save_vectorstore,
 )
 
+from zenml import pipeline
 
+@pipeline
 def run_build(
 	source_dir: str,
 	db_path: str,
@@ -32,9 +34,9 @@ def run_build(
 
 	# Step 2: Pull data into RAG pipeline by first chunking them
 	documents = fetch_all_documents(db_path)
-	print(f"Fetched {len(documents)} raw documents from DB")
+	#print(f"Fetched {len(documents)} raw documents from DB")
 	chunks = chunk_documents(documents, chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-	print(f"Created {len(chunks)} chunks")
+	#print(f"Created {len(chunks)} chunks")
 
 	# Step 3: Embed and save your documents in a vector database
 	embeddings_model = get_embeddings(model_name=model_name, provider=embeddings_provider)
@@ -62,8 +64,12 @@ def main() -> None:
 	project_root_env = Path(__file__).resolve().parents[1] / ".env"
 	load_dotenv(dotenv_path=str(project_root_env))
 
+	
+	# Ensure ZenML uses local mode (no server connection)
+	# Run this once: zenml logout (or zenml disconnect) to disconnect from any server
+
 	parser = argparse.ArgumentParser(description="RAG Pipeline Demo")
-	parser.add_argument("--source_dir", type=str, default="./data", help="Folder of input files or s3://bucket/prefix for public S3")
+	""" parser.add_argument("--source_dir", type=str, default="./data", help="Folder of input files or s3://bucket/prefix for public S3")
 	parser.add_argument("--db_path", type=str, default="./rag_raw_docs.sqlite", help="SQLite DB path")
 	parser.add_argument("--vectorstore_path", type=str, default="./chroma_store", help="Path to save/load Chroma")
 	parser.add_argument("--chunk_size", type=int, default=1000)
@@ -75,7 +81,7 @@ def main() -> None:
 		default="huggingface",
 		choices=["huggingface", "openai", "google"],
 		help="Embeddings backend to use",
-	)
+	) """
 	parser.add_argument("--query", type=str, default=None, help="Run a query against the saved vectorstore")
 	parser.add_argument("--k", type=int, default=4, help="Top-K documents to retrieve")
 
@@ -84,7 +90,7 @@ def main() -> None:
 	if args.query:
 		run_query(args.vectorstore_path, args.query, args.model_name, args.embeddings_provider, args.k)
 	else:
-		run_build(
+		""" run_build(
 			source_dir=args.source_dir,
 			db_path=args.db_path,
 			vectorstore_path=args.vectorstore_path,
@@ -92,7 +98,8 @@ def main() -> None:
 			chunk_overlap=args.chunk_overlap,
 			model_name=args.model_name,
 			embeddings_provider=args.embeddings_provider,
-		)
+		) """
+		run_build.with_options(config_path="./rag_pipeline/zenml.yaml")()
 
 
 if __name__ == "__main__":
