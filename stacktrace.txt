@@ -1,0 +1,180 @@
+Use pytorch device_name: cpu
+Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+Saved Chroma vectorstore to ./chroma_store
+Initiating a new run for the pipeline: run_build.
+Using user: default
+Using stack: default
+  orchestrator: default
+  deployer: default
+  artifact_store: default
+Dashboard URL for Pipeline Run: http://127.0.0.1:8237/projects/default/runs/2b7da529-f558-45e5-bace-22ee46ef8b73
+Step chunk_documents has started.
+Step chunk_documents has finished in 12.354s.
+Step build_vectorstore has started.
+[build_vectorstore] Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+Failed to run step build_vectorstore: 'dict' object has no attribute 'embed_documents'
+Step build_vectorstore failed.
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/local/local_orchestrator.py", line 167, in submit_pipeline
+    self.run_step(step=step)
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/local/local_orchestrator.py", line 167, in submit_pipeline
+    self.run_step(step=step)
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/base_orchestrator.py", line 433, in run_step
+    _launch_step()
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/base_orchestrator.py", line 433, in run_step
+    _launch_step()
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/base_orchestrator.py", line 418, in _launch_step
+    launcher.launch()
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/base_orchestrator.py", line 418, in _launch_step
+    launcher.launch()
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_launcher.py", line 352, in launch
+    self._run_step(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_launcher.py", line 352, in launch
+    self._run_step(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_launcher.py", line 457, in _run_step
+    self._run_step_without_step_operator(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_launcher.py", line 457, in _run_step
+    self._run_step_without_step_operator(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_launcher.py", line 543, in _run_step_without_step_operator
+    runner.run(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_launcher.py", line 543, in _run_step_without_step_operator
+    runner.run(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_runner.py", line 230, in run
+    return_values = step_instance.call_entrypoint(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/orchestrators/step_runner.py", line 230, in run
+    return_values = step_instance.call_entrypoint(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/steps/base_step.py", line 583, in call_entrypoint
+    return self.entrypoint(**validated_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/zenml/steps/base_step.py", line 583, in call_entrypoint
+    return self.entrypoint(**validated_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/rag_pipeline/pipeline.py", line 81, in build_vectorstore
+    return Chroma.from_documents(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/rag_pipeline/pipeline.py", line 81, in build_vectorstore
+    return Chroma.from_documents(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/langchain_chroma/vectorstores.py", line 1377, in from_documents
+    return cls.from_texts(
+           ^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/langchain_chroma/vectorstores.py", line 1377, in from_documents
+    return cls.from_texts(
+           ^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/langchain_chroma/vectorstores.py", line 1311, in from_texts
+    chroma_collection.add_texts(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/langchain_chroma/vectorstores.py", line 1311, in from_texts
+    chroma_collection.add_texts(
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/langchain_chroma/vectorstores.py", line 620, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-packages/langchain_chroma/vectorstores.py", line 620, in add_texts
+    embeddings = self._embedding_function.embed_documents(texts)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'embed_documents'
+AttributeError: 'dict' object has no attribute 'embed_documents'
+╭────────────────────── Traceback (most recent call last) ───────────────────────╮
+│ in _run_module_as_main:198                                                     │
+│ in _run_code:88                                                                │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/rag_pipeline/main.py:106 in   │
+│ <module>                                                                       │
+│                                                                                │
+│   103                                                                          │
+│   104                                                                          │
+│   105 if __name__ == "__main__":                                               │
+│ ❱ 106 │   main()                                                               │
+│   107                                                                          │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/rag_pipeline/main.py:102 in   │
+│ main                                                                           │
+│                                                                                │
+│    99 │   │   │   model_name=args.model_name,                                  │
+│   100 │   │   │   embeddings_provider=args.embeddings_provider,                │
+│   101 │   │   ) """                                                            │
+│ ❱ 102 │   │   run_build.with_options(config_path="./rag_pipeline/zenml.yaml")( │
+│   103                                                                          │
+│   104                                                                          │
+│   105 if __name__ == "__main__":                                               │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/pipelines/pipeline_definition.py:1599 in __call__                  │
+│                                                                                │
+│   1596 │   │   │   return self.entrypoint(*args, **kwargs)  # type: ignore[no- │
+│   1597 │   │                                                                   │
+│   1598 │   │   self.prepare(*args, **kwargs)                                   │
+│ ❱ 1599 │   │   return self._run()                                              │
+│   1600 │                                                                       │
+│   1601 │   def _call_entrypoint(self, *args: Any, **kwargs: Any) -> None:      │
+│   1602 │   │   """Calls the pipeline entrypoint function with the given argume │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/pipelines/pipeline_definition.py:1016 in _run                      │
+│                                                                                │
+│   1013 │   │   │   │   │   │   │   "`zenml login --local`."                    │
+│   1014 │   │   │   │   │   │   )                                               │
+│   1015 │   │   │   │                                                           │
+│ ❱ 1016 │   │   │   │   submit_pipeline(                                        │
+│   1017 │   │   │   │   │   snapshot=snapshot, stack=stack, placeholder_run=run │
+│   1018 │   │   │   │   )                                                       │
+│   1019                                                                         │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/pipelines/run_utils.py:140 in submit_pipeline                      │
+│                                                                                │
+│   137 │   │   │   # run as failed if it is still in an initializing/running st │
+│   138 │   │   │   publish_failed_pipeline_run(placeholder_run.id)              │
+│   139 │   │                                                                    │
+│ ❱ 140 │   │   raise e                                                          │
+│   141 │   finally:                                                             │
+│   142 │   │   constants.SHOULD_PREVENT_PIPELINE_EXECUTION = previous_value     │
+│   143                                                                          │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/pipelines/run_utils.py:121 in submit_pipeline                      │
+│                                                                                │
+│   118 │   constants.SHOULD_PREVENT_PIPELINE_EXECUTION = True                   │
+│   119 │   try:                                                                 │
+│   120 │   │   stack.prepare_pipeline_submission(snapshot=snapshot)             │
+│ ❱ 121 │   │   stack.submit_pipeline(                                           │
+│   122 │   │   │   snapshot=snapshot,                                           │
+│   123 │   │   │   placeholder_run=placeholder_run,                             │
+│   124 │   │   )                                                                │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/stack/stack.py:880 in submit_pipeline                              │
+│                                                                                │
+│    877 │   │   │   snapshot: The pipeline snapshot.                            │
+│    878 │   │   │   placeholder_run: An optional placeholder run for the snapsh │
+│    879 │   │   """                                                             │
+│ ❱  880 │   │   self.orchestrator.run(                                          │
+│    881 │   │   │   snapshot=snapshot, stack=self, placeholder_run=placeholder_ │
+│    882 │   │   )                                                               │
+│    883                                                                         │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/orchestrators/base_orchestrator.py:339 in run                      │
+│                                                                                │
+│   336 │   │   │   │   │   │   │   │   f"run metadata: {e}"                     │
+│   337 │   │   │   │   │   │   │   )                                            │
+│   338 │   │   │   else:                                                        │
+│ ❱ 339 │   │   │   │   submission_result = self.submit_pipeline(                │
+│   340 │   │   │   │   │   snapshot=snapshot,                                   │
+│   341 │   │   │   │   │   stack=stack,                                         │
+│   342 │   │   │   │   │   base_environment=base_environment,                   │
+│                                                                                │
+│ /Users/fikayo/Documents/Cursor-Projects/rag-demo/.venv/lib/python3.11/site-pac │
+│ kages/zenml/orchestrators/local/local_orchestrator.py:183 in submit_pipeline   │
+│                                                                                │
+│   180 │   │   │   raise step_exception                                         │
+│   181 │   │                                                                    │
+│   182 │   │   if failed_steps:                                                 │
+│ ❱ 183 │   │   │   raise RuntimeError(                                          │
+│   184 │   │   │   │   "Pipeline run has failed due to failure in step(s): "    │
+│   185 │   │   │   │   f"{', '.join(failed_steps)}"                             │
+│   186 │   │   │   )                                                            │
+╰────────────────────────────────────────────────────────────────────────────────╯
+RuntimeError: Pipeline run has failed due to failure in step(s): build_vectorstore
